@@ -31,7 +31,7 @@ const BASE_DIR = isProd ? '/tmp/reel-director' : path.join(__dirname, '..');
 // Ensure directories exist
 const uploadsDir = path.join(BASE_DIR, 'uploads');
 const outputDir = path.join(BASE_DIR, 'output');
-['', '/compressed', '/beauty', '/frames', '/clips'].forEach(sub => {
+['', '/raw', '/compressed', '/beauty', '/frames', '/clips'].forEach(sub => {
   const dir = path.join(uploadsDir, sub);
   if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
 });
@@ -229,10 +229,14 @@ app.get('/drive/thumb/:fileId', async (req, res) => {
     });
 
     const stream = await getFileThumbnail(drive, req.params.fileId);
+    stream.on('error', (streamErr) => {
+      console.error('Thumb stream error:', streamErr.message);
+      if (!res.headersSent) res.status(500).json({ error: streamErr.message });
+    });
     stream.pipe(res);
   } catch (err) {
     console.error('Thumb error:', err.message);
-    res.status(500).json({ error: err.message });
+    if (!res.headersSent) res.status(500).json({ error: err.message });
   }
 });
 

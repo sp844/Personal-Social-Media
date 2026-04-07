@@ -10,97 +10,92 @@
   <link rel="stylesheet" href="/style.css">
 </head>
 <body>
-  <!-- GRAIN OVERLAY -->
   <div class="grain-overlay"></div>
 
   <!-- HEADER -->
   <header class="header">
-    <div class="header-left">
-      <h1 class="logo">REEL DIRECTOR</h1>
-      <span class="tagline">AI Multi-Agent Content Studio</span>
+    <h1 class="logo">REEL DIRECTOR</h1>
+    <span class="tagline">AI Multi-Agent Content Studio</span>
+    <div class="platform-toggle">
+      <button class="platform-btn active" data-platform="instagram">Instagram</button>
+      <button class="platform-btn" data-platform="tiktok">TikTok</button>
     </div>
-    <div class="header-center">
-      <div class="platform-toggle">
-        <button class="platform-btn active" data-platform="instagram">Instagram</button>
-        <button class="platform-btn" data-platform="tiktok">TikTok</button>
-      </div>
-    </div>
-    <div class="header-right">
-      <div id="auth-area">
-        <button id="login-btn" class="btn btn-google" onclick="window.location.href='/auth/google'">
-          <svg width="18" height="18" viewBox="0 0 24 24"><path fill="#fff" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"/><path fill="#fff" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#fff" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#fff" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
-          Sign in with Google
-        </button>
-        <div id="user-info" class="user-info" style="display:none;">
-          <img id="user-avatar" class="avatar" src="" alt="">
-          <span id="user-name"></span>
-          <button class="btn btn-sm btn-muted" onclick="window.location.href='/auth/logout'">Logout</button>
-        </div>
+    <div class="auth-area" id="auth-area">
+      <button id="login-btn" class="btn-google" onclick="window.location.href='/auth/google'">
+        <svg width="18" height="18" viewBox="0 0 24 24"><path fill="#fff" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"/><path fill="#fff" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#fff" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#fff" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+        Sign in with Google
+      </button>
+      <div id="user-info" class="user-info" style="display:none;">
+        <img id="user-avatar" class="avatar" src="" alt="">
+        <span id="user-name"></span>
+        <button class="btn btn-sm btn-muted" onclick="window.location.href='/auth/logout'">Logout</button>
       </div>
     </div>
   </header>
 
-  <main class="main-content">
+  <main class="container">
 
-    <!-- SECTION: GOOGLE DRIVE BROWSER -->
+    <!-- GOOGLE DRIVE BROWSER -->
     <section id="drive-section" class="section" style="display:none;">
-      <div class="section-header">
-        <h2>Google Drive</h2>
-        <div class="breadcrumb" id="breadcrumb">
-          <button class="breadcrumb-item active" data-folder="root">Home</button>
-        </div>
+      <div class="section-header"><h2>Google Drive</h2></div>
+      <div class="breadcrumb" id="breadcrumb">
+        <span class="active" data-folder="root">Home</span>
       </div>
-      <div class="drive-toolbar">
-        <div class="file-count" id="file-count">0 items</div>
-        <div class="filter-tabs">
-          <button class="filter-btn active" data-filter="all">All</button>
-          <button class="filter-btn" data-filter="photos">Photos</button>
-          <button class="filter-btn" data-filter="videos">Videos</button>
+      <div class="flex-between mb-1">
+        <span class="muted small text-mono" id="file-count">0 items</span>
+        <div class="flex gap-1">
+          <button class="btn btn-sm filter-btn active" data-filter="all">All</button>
+          <button class="btn btn-sm filter-btn" data-filter="photos">Photos</button>
+          <button class="btn btn-sm filter-btn" data-filter="videos">Videos</button>
         </div>
       </div>
       <div class="drive-grid" id="drive-grid"></div>
       <div class="selection-bar" id="selection-bar" style="display:none;">
-        <span class="selection-count" id="selection-count">0 files selected</span>
-        <button class="btn btn-sm btn-gold" id="select-all-btn">Select All</button>
-        <button class="btn btn-sm btn-muted" id="deselect-all-btn">Deselect All</button>
+        <span class="count" id="selection-count">0 files selected</span>
+        <div class="flex gap-1">
+          <button class="btn btn-sm btn-gold" id="select-all-btn">Select All</button>
+          <button class="btn btn-sm btn-muted" id="deselect-all-btn">Deselect All</button>
+        </div>
       </div>
     </section>
 
-    <!-- SECTION: DIRECT UPLOAD (when not logged in) -->
+    <!-- DIRECT UPLOAD -->
     <section id="upload-section" class="section">
       <div class="section-header">
         <h2>Upload Media</h2>
-        <p class="section-desc">Sign in with Google to browse Drive, or upload files directly</p>
+        <span class="muted small">Sign in with Google to browse Drive, or upload directly</span>
       </div>
       <div class="upload-zone" id="upload-zone">
         <div class="upload-icon">📁</div>
         <p>Drag & drop photos and videos here</p>
-        <p class="muted">or click to browse</p>
+        <p class="muted small">or click to browse</p>
         <input type="file" id="file-input" multiple accept="image/*,video/*" style="display:none;">
       </div>
-      <div class="uploaded-files" id="uploaded-files"></div>
+      <div id="uploaded-files" class="mt-1"></div>
     </section>
 
-    <!-- SECTION: VIDEO OPTIONS -->
+    <!-- VIDEO OPTIONS -->
     <section id="video-options-section" class="section" style="display:none;">
       <div class="section-header">
         <h2>Video Options</h2>
-        <p class="section-desc">Choose how to use each video in the pipeline</p>
+        <span class="muted small">Choose how to use each video</span>
       </div>
-      <div id="video-options-list"></div>
+      <div class="video-options" id="video-options-list"></div>
     </section>
 
-    <!-- SECTION: CONTEXT + BRIEF -->
+    <!-- CONTEXT + BRIEF -->
     <section id="context-section" class="section">
-      <div class="section-header">
-        <h2>Content Context</h2>
-      </div>
+      <div class="section-header"><h2>Content Context</h2></div>
       <div class="form-grid">
         <div class="form-group">
           <label>What's this about?</label>
-          <input type="text" id="context-input" class="input" placeholder="e.g. My Japan trip, food tour in Osaka, weekend at the beach...">
+          <input type="text" id="context-input" class="input" placeholder="e.g. My Japan trip, food tour in Osaka...">
         </div>
         <div class="form-group">
+          <label>Target Audience</label>
+          <input type="text" id="audience-input" class="input" placeholder="e.g. Travel lovers 20-35, foodies...">
+        </div>
+        <div class="form-group full-width">
           <label>Vibe</label>
           <div class="vibe-selector" id="vibe-selector">
             <button class="vibe-btn active" data-vibe="Cinematic">Cinematic</button>
@@ -112,44 +107,34 @@
             <button class="vibe-btn" data-vibe="Emotional Storytelling">Emotional</button>
           </div>
         </div>
-        <div class="form-group">
-          <label>Target Audience</label>
-          <input type="text" id="audience-input" class="input" placeholder="e.g. Travel lovers 20-35, foodies, adventure seekers...">
-        </div>
       </div>
-
-      <!-- DIRECTOR'S BRIEF -->
-      <div class="brief-box">
-        <div class="brief-header">
-          <span class="brief-icon">🎥</span>
-          <h3>DIRECTOR'S BRIEF</h3>
-          <span class="brief-subtitle">Give agents your vision</span>
-        </div>
-        <textarea id="brief-input" class="textarea" rows="4" placeholder="Example: Start with the strongest food close-up. Use rapid cuts for the market walk. End on the sunset rooftop shot. Keep it under 20 seconds. Make it feel spontaneous but curated."></textarea>
-        <div class="quick-chips">
-          <button class="chip" data-text="People first — prioritize shots with faces and expressions">👥 People first</button>
-          <button class="chip" data-text="Food focus — lead with the best food shots and close-ups">🍜 Food focus</button>
-          <button class="chip" data-text="Scenery emphasis — wide shots and landscapes">🏯 Scenery</button>
-          <button class="chip" data-text="Journey mix — chronological flow showing the full experience">🗺️ Journey mix</button>
-          <button class="chip" data-text="Fast cuts — rapid transitions, high energy, under 20 seconds">⚡ Fast cuts</button>
-          <button class="chip" data-text="Cinematic feel — slow pacing, dramatic transitions, emotional">🎞️ Cinematic</button>
-          <button class="chip" data-text="Skip any low quality or blurry photos">🚫 Skip low quality</button>
-          <button class="chip" data-text="Strong opener — start with the most eye-catching shot">🔥 Strong opener</button>
+      <div class="directors-brief mt-2">
+        <div class="brief-label">🎥 DIRECTOR'S BRIEF — Give agents your vision</div>
+        <textarea id="brief-input" class="textarea" rows="4" placeholder="Example: Start with the strongest food close-up. Use rapid cuts for the market walk. End on the sunset rooftop shot. Keep it under 20 seconds."></textarea>
+        <div class="quick-chips mt-1">
+          <button class="quick-chip" data-text="People first — prioritize shots with faces and expressions">👥 People first</button>
+          <button class="quick-chip" data-text="Food focus — lead with the best food shots and close-ups">🍜 Food focus</button>
+          <button class="quick-chip" data-text="Scenery emphasis — wide shots and landscapes">🏯 Scenery</button>
+          <button class="quick-chip" data-text="Journey mix — chronological flow showing the full experience">🗺️ Journey mix</button>
+          <button class="quick-chip" data-text="Fast cuts — rapid transitions, high energy, under 20 seconds">⚡ Fast cuts</button>
+          <button class="quick-chip" data-text="Cinematic feel — slow pacing, dramatic transitions, emotional">🎞️ Cinematic</button>
+          <button class="quick-chip" data-text="Skip any low quality or blurry photos">🚫 Skip low quality</button>
+          <button class="quick-chip" data-text="Strong opener — start with the most eye-catching shot">🔥 Strong opener</button>
         </div>
       </div>
     </section>
 
-    <!-- SECTION: BEAUTY SETTINGS -->
+    <!-- BEAUTY SETTINGS -->
     <section id="beauty-section" class="section">
-      <div class="collapsible-header" onclick="toggleSection('beauty-panel')">
+      <div class="collapsible-header" id="beauty-toggle">
         <span>💄 BEAUTY SETTINGS</span>
-        <span class="collapse-icon" id="beauty-panel-icon">▼</span>
+        <span class="chevron">▼</span>
       </div>
-      <div class="collapsible-panel" id="beauty-panel" style="display:none;">
+      <div class="collapsible-panel" id="beauty-panel">
         <div class="beauty-grid">
           <div class="beauty-row">
-            <label>Skin Smoothing</label>
-            <div class="beauty-controls">
+            <span class="beauty-label">Skin Smoothing</span>
+            <div class="flex gap-1">
               <label class="toggle"><input type="checkbox" id="beauty-smooth"><span class="toggle-slider"></span></label>
               <div class="strength-btns" id="smooth-strength">
                 <button class="strength-btn" data-val="light">Light</button>
@@ -159,8 +144,8 @@
             </div>
           </div>
           <div class="beauty-row">
-            <label>Face Slimming</label>
-            <div class="beauty-controls">
+            <span class="beauty-label">Face Slimming</span>
+            <div class="flex gap-1">
               <label class="toggle"><input type="checkbox" id="beauty-slim"><span class="toggle-slider"></span></label>
               <div class="strength-btns" id="slim-strength">
                 <button class="strength-btn active" data-val="subtle">Subtle</button>
@@ -170,113 +155,67 @@
             </div>
           </div>
           <div class="beauty-row">
-            <label>Brightness Lift</label>
+            <span class="beauty-label">Brightness Lift</span>
             <label class="toggle"><input type="checkbox" id="beauty-bright"><span class="toggle-slider"></span></label>
           </div>
           <div class="beauty-row">
-            <label>Warmth Boost</label>
+            <span class="beauty-label">Warmth Boost</span>
             <label class="toggle"><input type="checkbox" id="beauty-warmth"><span class="toggle-slider"></span></label>
           </div>
           <div class="beauty-row">
-            <label>AI Beauty (Picsart)</label>
+            <span class="beauty-label">AI Beauty (Picsart)<span class="label-hint">Requires API key</span></span>
             <label class="toggle"><input type="checkbox" id="beauty-picsart"><span class="toggle-slider"></span></label>
-            <span class="muted small" id="picsart-status"></span>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- SECTION: GENERATE BUTTON -->
-    <section id="generate-section" class="section">
-      <button class="btn btn-generate" id="generate-btn" disabled>
-        <span class="generate-icon">▶</span>
-        <span class="generate-text">RUN 6-AGENT PIPELINE</span>
-        <span class="generate-meta" id="generate-meta">Select files to begin</span>
+    <!-- GENERATE BUTTON -->
+    <section style="margin-bottom:24px;">
+      <button class="btn-generate" id="generate-btn" disabled>
+        ▶ RUN 6-AGENT PIPELINE
+        <br><span id="generate-meta" style="font-family:var(--font-body);font-size:0.75rem;letter-spacing:0;text-transform:none;opacity:0.7;">Select files to begin</span>
       </button>
     </section>
 
-    <!-- SECTION: LIVE PIPELINE -->
+    <!-- LIVE PIPELINE -->
     <section id="pipeline-section" class="section" style="display:none;">
-      <div class="section-header">
-        <h2>Pipeline Progress</h2>
-      </div>
+      <div class="section-header"><h2>Pipeline Progress</h2></div>
       <div class="agent-nodes" id="agent-nodes">
-        <div class="agent-node" data-index="0">
-          <div class="agent-icon">⚙️</div>
-          <div class="agent-name">Compressor</div>
-          <div class="agent-status">queued</div>
-        </div>
-        <div class="agent-node" data-index="1">
-          <div class="agent-icon">✨</div>
-          <div class="agent-name">Beauty</div>
-          <div class="agent-status">queued</div>
-        </div>
-        <div class="agent-node" data-index="2">
-          <div class="agent-icon">👁️</div>
-          <div class="agent-name">Vision Scout</div>
-          <div class="agent-status">queued</div>
-        </div>
-        <div class="agent-node" data-index="3">
-          <div class="agent-icon">🎬</div>
-          <div class="agent-name">Story Director</div>
-          <div class="agent-status">queued</div>
-        </div>
-        <div class="agent-node" data-index="4">
-          <div class="agent-icon">✂️</div>
-          <div class="agent-name">Edit Supervisor</div>
-          <div class="agent-status">queued</div>
-        </div>
-        <div class="agent-node" data-index="5">
-          <div class="agent-icon">📱</div>
-          <div class="agent-name">Platform Spec</div>
-          <div class="agent-status">queued</div>
-        </div>
-        <div class="agent-node" data-index="6">
-          <div class="agent-icon">✍️</div>
-          <div class="agent-name">Copy Writer</div>
-          <div class="agent-status">queued</div>
-        </div>
+        <div class="agent-node queued" data-index="0"><div class="node-icon">⚙️</div><div class="node-label">Compressor</div><div class="node-status">queued</div></div>
+        <div class="agent-node queued" data-index="1"><div class="node-icon">✨</div><div class="node-label">Beauty</div><div class="node-status">queued</div></div>
+        <div class="agent-node queued" data-index="2"><div class="node-icon">👁️</div><div class="node-label">Vision Scout</div><div class="node-status">queued</div></div>
+        <div class="agent-node queued" data-index="3"><div class="node-icon">🎬</div><div class="node-label">Story Director</div><div class="node-status">queued</div></div>
+        <div class="agent-node queued" data-index="4"><div class="node-icon">✂️</div><div class="node-label">Edit Supervisor</div><div class="node-status">queued</div></div>
+        <div class="agent-node queued" data-index="5"><div class="node-icon">📱</div><div class="node-label">Platform Spec</div><div class="node-status">queued</div></div>
+        <div class="agent-node queued" data-index="6"><div class="node-icon">✍️</div><div class="node-label">Copy Writer</div><div class="node-status">queued</div></div>
       </div>
-      <div class="live-log" id="live-log"></div>
+      <div class="live-log mt-2" id="live-log"></div>
     </section>
 
-    <!-- SECTION: COMPRESSION REPORT -->
+    <!-- COMPRESSION REPORT -->
     <section id="compression-section" class="section" style="display:none;">
-      <div class="section-header">
-        <h2>Compression Report</h2>
-      </div>
+      <div class="section-header"><h2>Compression Report</h2></div>
       <div class="report-pills" id="report-pills"></div>
-      <div class="report-progress">
-        <div class="progress-bar" id="compression-progress"></div>
-      </div>
-      <div class="report-table-wrap">
-        <table class="report-table" id="report-table">
-          <thead>
-            <tr><th>File</th><th>Original</th><th>Compressed</th><th>Saved</th></tr>
-          </thead>
-          <tbody id="report-tbody"></tbody>
-        </table>
-      </div>
+      <div class="progress-bar"><div class="progress-fill green" id="compression-progress" style="width:0%"></div></div>
+      <table class="report-table mt-1">
+        <thead><tr><th>File</th><th>Original</th><th>Compressed</th><th>Saved</th></tr></thead>
+        <tbody id="report-tbody"></tbody>
+      </table>
     </section>
 
-    <!-- SECTION: RESULTS -->
+    <!-- RESULTS -->
     <section id="results-section" class="section" style="display:none;">
-      <div class="section-header">
-        <h2>Results</h2>
-      </div>
+      <div class="section-header"><h2>Results</h2></div>
       <div class="concept-tabs" id="concept-tabs"></div>
-      <div class="concept-content" id="concept-content"></div>
+      <div id="concept-content"></div>
     </section>
 
-    <!-- SECTION: DOWNLOAD -->
+    <!-- DOWNLOAD -->
     <section id="download-section" class="section" style="display:none;">
-      <div class="download-actions">
-        <a class="btn btn-gold btn-lg" id="drive-link-btn" href="#" target="_blank" style="display:none;">
-          ☁️ View in Google Drive
-        </a>
-        <a class="btn btn-green btn-lg" href="/download/zip">
-          ⬇️ Download All as ZIP
-        </a>
+      <div class="flex-center gap-2">
+        <a class="btn btn-lg btn-gold" id="drive-link-btn" href="#" target="_blank" style="display:none;">☁️ View in Google Drive</a>
+        <a class="btn btn-lg btn-green" href="/download/zip">⬇️ Download All as ZIP</a>
       </div>
     </section>
 

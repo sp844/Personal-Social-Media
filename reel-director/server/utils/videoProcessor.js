@@ -26,7 +26,7 @@ function getVideoMetadata(videoPath) {
         width: videoStream ? videoStream.width : 0,
         height: videoStream ? videoStream.height : 0,
         codec: videoStream ? videoStream.codec_name : 'unknown',
-        fps: videoStream ? eval(videoStream.r_frame_rate) : 0,
+        fps: videoStream ? (function() { var parts = String(videoStream.r_frame_rate).split('/'); return parts.length === 2 ? Number(parts[0]) / Number(parts[1]) : Number(parts[0]) || 0; })() : 0,
         size: metadata.format.size || 0,
         format: metadata.format.format_name
       });

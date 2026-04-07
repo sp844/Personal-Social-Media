@@ -37,10 +37,8 @@ async function downloadFile(drive, fileId, destPath) {
 
   return new Promise((resolve, reject) => {
     const dest = require('fs').createWriteStream(destPath);
-    res.data
-      .on('end', () => resolve(destPath))
-      .on('error', reject)
-      .pipe(dest);
+    res.data.on('error', reject).pipe(dest);
+    dest.on('error', reject).on('finish', () => resolve(destPath));
   });
 }
 
@@ -92,8 +90,6 @@ async function ensureOutputFolder(drive) {
 }
 
 async function uploadToDrive(drive, localPath, fileName, folderId) {
-  const fileContent = await fs.readFile(localPath);
-
   const res = await drive.files.create({
     requestBody: {
       name: fileName,
